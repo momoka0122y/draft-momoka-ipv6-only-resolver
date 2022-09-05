@@ -25,7 +25,7 @@ author:
     email: momoka.my6@gmail.com
 
  -
-    ins: yas-nyan
+    ins: Y. Toyota
     name: Toyota Yasunobu
     organization: WIDE
     email: yasnyan@sfc.wide.ad.jp
@@ -54,7 +54,7 @@ This mechanism allows an IPv6-only resolver to initiate communications to an aut
 
 TODO Introduction
 
-This document specifies how a IPv6 only resolver can perform IPv4 to IPv6 translation in order to utilize the NAT64 to access a IPv4 only authoritative name server.
+This document specifies how a IPv6 only resolver can perform IPv4 to IPv6 translation {{!RFC6052}} in order to utilize the NAT64 {{!NAT64=RFC6146}} to access a IPv4 only authoritative name server.
 This mechanism allows an IPv6-only resolver (i.e., a host with a networking stack that only implements IPv6, a host with a
 networking stack that implements both protocols but with only IPv6
 connectivity) to initiate communications to an IPv4-only authorative name server.

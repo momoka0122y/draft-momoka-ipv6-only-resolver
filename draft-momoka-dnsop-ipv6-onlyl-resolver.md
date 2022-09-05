@@ -32,26 +32,12 @@ author:
 
 
 normative:
-  RFC6052:
-  RFC6146:
-    display: NAT64
-  RFC6147:
-    display: DNS64
-  RFC1035:
-  RFC3901:
-  RFC4787:
+
 
 
 
 informative:
-  RFC7050:
-  RFC3596:
-  RFC6144:
-  RFC4033:
-  RFC4034:
-  RFC4045:
-  RFC4074:
-  RFC4045:
+
 
 
 
@@ -69,9 +55,16 @@ This mechanism allows an IPv6-only resolver to initiate communications to an aut
 TODO Introduction
 
 This document specifies how a IPv6 only resolver can perform IPv4 to IPv6 translation in order to utilize the NAT64 to access a IPv4 only authoritative name server.
+This mechanism allows an IPv6-only resolver (i.e., a host with a networking stack that only implements IPv6, a host with a
+networking stack that implements both protocols but with only IPv6
+connectivity) to initiate communications to an IPv4-only authorative name server.
+
 
 # Motivation and Problem Solved
+TODO
 We want IPv6 only resolver.
+But RFC3901 says it needs IPv4.
+We can have access IPv4 only authrative name servers.
 
 # Conventions and Definitions
 
@@ -88,9 +81,10 @@ TODO Security
 This document has no IANA actions.
 
 # Implementation Status
-TODO
+TODO: write this part and mail Bind.
 
-Unbound and Bind !!
+Bind has an WIP branch.
+Unbound has a PR from a contributor.
 
 --- back
 

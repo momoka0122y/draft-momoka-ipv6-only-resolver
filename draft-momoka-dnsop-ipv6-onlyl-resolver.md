@@ -1,16 +1,14 @@
 ---
-# Using https://github.com/httpwg/http-extensions/blob/main/archive/draft-ietf-httpbis-priority.md?plain=1 as example.
-
 
 title: "IPv6 only resolver under NAT64"
-# abbrev: "delete this part if title is short."
+abbrev: "delete this part if title is short."
 docname: draft-momoka-dnsop-ipv6-onlyl-resolver-latest
 category: info
 
 ipr: trust200902
 area: Ops
-workgroup: TODO dnsop
-keyword: 
+workgroup: dnsop
+keyword:
   - DNS
   - IPv6
 
@@ -32,9 +30,8 @@ author:
     organization: WIDE
     email: yasnyan@sfc.wide.ad.jp
 
-# Normative references specify documents that must be read to understand or implement the technology in the new RFC, or whose technology must be present for the technology in the new RFC to work. An informative reference is not normative; rather, it only provides additional information.
+
 normative:
-# 6052 7050 
 
 
 informative:

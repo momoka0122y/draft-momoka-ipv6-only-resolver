@@ -1,8 +1,7 @@
 ---
-
 title: "IPv6 only resolver under NAT64"
-abbrev: "delete this part if title is short."
-docname: draft-momoka-dnsop-ipv6-onlyl-resolver-latest
+abbrev: IPv6 only Resolver
+docname: draft-momoka-dnsop-ipv6-only-resolver-latest
 category: info
 
 ipr: trust200902
@@ -62,13 +61,40 @@ connectivity) to initiate communications to an IPv4-only authorative name server
 
 # Motivation and Problem Solved
 TODO
-We want IPv6 only resolver.
-But RFC3901 says it needs IPv4.
-We can have access IPv4 only authrative name servers.
+
+write something like...
+
+We want IPv6 only resolver. Because there are more IPv6 only networks.
+
+But RFC3901 says resolvers needs IPv4.
+
+This mechanism allows IPv6 only resolvers thus more resolvers in IPv6 only networks.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+# Normative Specification
+
+## Generation of the IPv6 Representations of IPv4 Addresses
+### Resolveing AAAA Queries to an authoritive name server.
+TODO:
+
+To know  if the server has IPv6, 5.1 of RFC6147
+### Obtaining the Pref64::/n
+The resolver can know the Pref64::/n by static configuration
+(most likely because this resolver may also do DNS64 Network Address Translation to the IPv4 address to the domain with only a A record)
+or by using RFC7225 or RFC8781.
+Using RFC7050 or draft-hunek-v6ops-nat64-srv may not work because these need a resolver to work.
+### Performing the Synthesis
+
+
+
+# Deployment Notes
+I don't know any notes to add here...
+
+
+# Deployment Scenarios and Examples
 
 
 # Security Considerations
@@ -84,7 +110,13 @@ This document has no IANA actions.
 TODO: write this part and mail Bind.
 
 Bind has an WIP branch.
+
+https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/6334/commits
+
 Unbound has a PR from a contributor.
+
+
+https://github.com/NLnetLabs/unbound/issues/721
 
 --- back
 

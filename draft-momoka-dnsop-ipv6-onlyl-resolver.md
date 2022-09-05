@@ -4,7 +4,7 @@
 
 title: "IPv6 only resolver under NAT64"
 # abbrev: "delete this part if title is short."
-docname: draft-momoka-dns0p-ipv6-onlyl-resolver-latest
+docname: draft-momoka-dnsop-ipv6-onlyl-resolver-latest
 category: info
 
 ipr: trust200902

@@ -77,15 +77,20 @@ This mechanism allows IPv6 only resolvers thus more resolvers in IPv6 only netwo
 # Normative Specification
 
 ## Generation of the IPv6 Representations of IPv4 Addresses
+
+
 ### Resolveing AAAA Queries to an authoritive name server.
 TODO:
 
 To know  if the server has IPv6, 5.1 of RFC6147
+
 ### Obtaining the Pref64::/n
 The resolver can know the Pref64::/n by static configuration
 (most likely because this resolver may also do DNS64 Network Address Translation to the IPv4 address to the domain with only a A record)
 or by using RFC7225 or RFC8781.
 Using RFC7050 or draft-hunek-v6ops-nat64-srv may not work because these need a resolver to work.
+
+
 ### Performing the Synthesis
 
 

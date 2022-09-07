@@ -53,14 +53,18 @@ This mechanism allows an IPv6 only recursive name server to initiate communicati
 
 TODO Introduction
 
-This document specifies how a IPv6 only recursive name server can perform IPv4 to IPv6 translation {{!RFC6052}} in order to utilize the NAT64 {{!NAT64=RFC6146}} to access a IPv4 only authoritative name server.
+
+This document describes how an IPv6 only recursive name server can use NAT64 (!NAT64=RFC6146)
+to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation (!RFC6052).
 This mechanism allows an IPv6 only recursive name server (i.e., a host with a networking stack that only implements IPv6, or a host with a
-networking stack that implements both protocols but with only IPv6
-connectivity) to initiate communications to an IPv4-only authorative name server.
+networking stack that implements both protocols but with only IPv6 connectivity)
+to initiate communications to an IPv4-only authorative name server.
 
 
 # Motivation and Problem Solved
 TODO
+
+
 
 write something like...
 
@@ -69,6 +73,10 @@ We want IPv6 only resolver. Because there are more IPv6 only networks.
 But RFC3901 says resolvers needs IPv4.
 
 This mechanism allows IPv6 only resolvers thus more resolvers in IPv6 only networks.
+
+
+By limiting IPv4 reachability to NAT64 devices in an IPv6 single-stack network, IPv4 usage is reduced and operators are free to focus on IPv6 operations.
+All three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is necessary to consider the existence of an IPv6 single-stack full-service resolver with DNS64 capabilities.
 
 # Conventions and Definitions
 
@@ -82,13 +90,11 @@ This mechanism allows IPv6 only resolvers thus more resolvers in IPv6 only netwo
 ### Resolveing AAAA Queries to an authoritive name server.
 TODO:
 
-To know  if the server has IPv6, 5.1 of RFC6147
+To know if the server has IPv6, follow 5.1 of RFC6147.
 
 ### Obtaining the Pref64::/n
-The resolver can know the Pref64::/n by static configuration
-(most likely because this resolver may also do DNS64 Network Address Translation to the IPv4 address to the domain with only a A record)
-or by using RFC7225 or RFC8781.
-Using RFC7050 or draft-hunek-v6ops-nat64-srv may not work because these need a resolver to work.
+The resolver can recognize the Pref64::/n using static configuration or other or by using RFC7225 or RFC8781.
+Because these require a resolver to function, using RFC7050 or draft-hunek-v6ops-nat64-srv connot be successful.
 
 
 ### Performing the Synthesis
@@ -96,17 +102,29 @@ TODO
 
 Use {{!RFC6052}}.
 
+## Use of the recursive name server as DNS64
+
+TODO:
+
+Since the recursive name server will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
+
 
 # Deployment Notes
-I don't know any notes to add here...
+TODO
 
 
 # Deployment Scenarios and Examples
+TODO
 
+Add deployment example topologoies.
+
+The resolver will be inside the IPv6 only network and not on the edge with IPv4.
 
 # Security Considerations
 
 TODO Security
+
+DNSSEC Validators and DNS64.
 
 
 # IANA Considerations
@@ -120,9 +138,8 @@ Bind has an WIP branch.
 
 https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/6334/commits
 
+
 Unbound has a PR from a contributor.
-
-
 https://github.com/NLnetLabs/unbound/issues/721
 
 --- back

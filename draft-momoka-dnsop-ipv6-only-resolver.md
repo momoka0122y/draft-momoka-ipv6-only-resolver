@@ -1,5 +1,5 @@
 ---
-title: "IPv6 only recursive name server under NAT64"
+title: "IPv6 only recursive resolver under NAT64"
 abbrev: IPv6 only Resolver
 docname: draft-momoka-dnsop-ipv6-only-resolver-latest
 category: info
@@ -43,9 +43,9 @@ informative:
 
 --- abstract
 
-By performing IPv4 to IPv6 translation, IPv6 only recursive name servers can operate in a NAT64 environment.
-When a specific DNS zone is only served by a IPv4 only name server, the recursive name server will translate IPv4 to IPv6 in order to access the authoritative name server's IPv4 address via NAT64.
-This mechanism allows an IPv6 only recursive name server to initiate communications to an authoritative name server.
+By performing IPv4 to IPv6 translation, IPv6 only recursive resolvers can operate in a NAT64 environment.
+When a specific DNS zone is only served by an IPv4 only name server, the recursive resolver will translate the IPv4 address to IPv6 in order to access the authoritative name server's IPv4 address via NAT64.
+This mechanism allows IPv6 only recursive resolvers to initiate communications to IPv4 only authoritative name servers.
 
 --- middle
 
@@ -54,11 +54,12 @@ This mechanism allows an IPv6 only recursive name server to initiate communicati
 TODO Introduction
 
 
-This document describes how an IPv6 only recursive name server can use NAT64 (!NAT64=RFC6146)
-to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation (!RFC6052).
-This mechanism allows an IPv6 only recursive name server (i.e., a host with a networking stack that only implements IPv6, or a host with a
-networking stack that implements both protocols but with only IPv6 connectivity)
-to initiate communications to an IPv4-only authorative name server.
+This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation (!RFC6052).
+When a specific DNS zone is only served by an IPv4 only name server, an IPv6 only recursive resolver cannot resolve that zone with IPv6, but by performing IPv4 to IPv6 translation {{!RFC6052}} and utilizing the NAT64 {{!NAT64=RFC6146}} this will be possible.
+
+This mechanism allows an IPv6 only recursive resolver
+(i.e., a host with a networking stack that only implements IPv6, or a host with a networking stack that implements both protocols but with only IPv6 connectivity)
+to initiate communications to an IPv4-only authoritative name server.
 
 
 # Motivation and Problem Solved
@@ -87,10 +88,14 @@ All three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is
 ## Generation of the IPv6 Representations of IPv4 Addresses
 
 
-### Resolveing AAAA Queries to an authoritive name server.
+### Resolveing AAAA Queries to an authoritative name server.
 TODO:
 
-To know if the server has IPv6, follow 5.1 of RFC6147.
+To know if the server has IPv6 or has only IPv4, follow 5.1 of RFC6147.
+
+TODO
+
+This mechanism may change for doing so for authoritative servers. Will make sure to document that.
 
 ### Obtaining the Pref64::/n
 The resolver can recognize the Pref64::/n using static configuration or other or by using RFC7225 or RFC8781.
@@ -102,11 +107,11 @@ TODO
 
 Use {{!RFC6052}}.
 
-## Use of the recursive name server as DNS64
+## Use of the recursive resolver as DNS64
 
 TODO:
 
-Since the recursive name server will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
+Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
 
 
 # Deployment Notes

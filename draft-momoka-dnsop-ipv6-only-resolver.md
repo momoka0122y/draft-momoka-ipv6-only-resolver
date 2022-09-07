@@ -1,5 +1,5 @@
 ---
-title: "IPv6 only resolver under NAT64"
+title: "IPv6 only recursive name server under NAT64"
 abbrev: IPv6 only Resolver
 docname: draft-momoka-dnsop-ipv6-only-resolver-latest
 category: info
@@ -43,9 +43,9 @@ informative:
 
 --- abstract
 
-By performing IPv4 to IPv6 translation, IPv6 only resolvers can operate in a NAT64 environment.
-When a specific DNS zone is only served by a IPv4-only name server, the resolver will translate IPv4 to IPv6 in order to access the authoritative name server's IPv4 address via NAT64.
-This mechanism allows an IPv6-only resolver to initiate communications to an authoritative name server.
+By performing IPv4 to IPv6 translation, IPv6 only recursive name servers can operate in a NAT64 environment.
+When a specific DNS zone is only served by a IPv4 only name server, the recursive name server will translate IPv4 to IPv6 in order to access the authoritative name server's IPv4 address via NAT64.
+This mechanism allows an IPv6 only recursive name server to initiate communications to an authoritative name server.
 
 --- middle
 
@@ -53,8 +53,8 @@ This mechanism allows an IPv6-only resolver to initiate communications to an aut
 
 TODO Introduction
 
-This document specifies how a IPv6 only resolver can perform IPv4 to IPv6 translation {{!RFC6052}} in order to utilize the NAT64 {{!NAT64=RFC6146}} to access a IPv4 only authoritative name server.
-This mechanism allows an IPv6-only resolver (i.e., a host with a networking stack that only implements IPv6, a host with a
+This document specifies how a IPv6 only recursive name server can perform IPv4 to IPv6 translation {{!RFC6052}} in order to utilize the NAT64 {{!NAT64=RFC6146}} to access a IPv4 only authoritative name server.
+This mechanism allows an IPv6 only recursive name server (i.e., a host with a networking stack that only implements IPv6, or a host with a
 networking stack that implements both protocols but with only IPv6
 connectivity) to initiate communications to an IPv4-only authorative name server.
 
@@ -92,7 +92,9 @@ Using RFC7050 or draft-hunek-v6ops-nat64-srv may not work because these need a r
 
 
 ### Performing the Synthesis
+TODO
 
+Use {{!RFC6052}}.
 
 
 # Deployment Notes
@@ -128,4 +130,4 @@ https://github.com/NLnetLabs/unbound/issues/721
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+TODO acknowledge people.

@@ -110,13 +110,13 @@ Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function be
 
 
 ### Performing the Synthesis
-TODO
 
-Use {{!RFC6052}}.
+Performing the addres translation should follow Section 2.3 of {{!RFC6052}}.
+The IPv6-only recursive resolver should send a query to the converted IPv6 address.
 
 ## Use of the recursive resolver as DNS64
 
-Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
+Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}}.
 
 
 # Deployment Notes

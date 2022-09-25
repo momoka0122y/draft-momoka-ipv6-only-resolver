@@ -38,9 +38,9 @@ normative:
 
 informative:
   I-D.ietf-v6ops-ipv6-deployment:
-    display: I-D.ietf-v6ops-ipv6-deployment
+    display: ietf-v6ops-ipv6-deployment
   I-D.draft-hunek-v6ops-nat64-srv:
-    display: I-D.draft-hunek-v6ops-nat64-srv
+    display: draft-hunek-v6ops-nat64-srv
 
 
 
@@ -57,7 +57,7 @@ This mechanism allows IPv6 only recursive resolvers to initiate communications t
 
 This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation {{!RFC6052}}.
 When a specific DNS zone is only served by an IPv4 only authoritative name server, an IPv6 only recursive resolver cannot resolve that zone due to having no　access to an IPv4 network.
-However by performing IPv4 to IPv6 translation {{!RFC6052}} and utilizing the NAT64 {{!NAT64=RFC6146}} accessing a IPv4 only authoritative name server will be possible.
+However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing a IPv4 only authoritative name server will be possible.
 
 
 
@@ -97,7 +97,7 @@ With this implementation a recursive resolver can be operated even inside an IPv
 ### Resolveing queries and finding an Authoritative server with only IPv4 addresses.
 
 Before the server sends queries it may sort the SLIST data structure to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
-
+When the server that the resolver wish to send queries only has an IPv4 address it should synthesise the IPv4 address to the converted IPv6 address.
 By default, synthesizing implementation SHOULD NOT synthesize IPv4 addresses of an authoritative name server if the authoritative name server also has an IPv6 address.
 
 ### Obtaining the Pref64::/n of the NAT64
@@ -112,7 +112,12 @@ Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function be
 ### Performing the Synthesis
 
 Performing the addres translation should follow Section 2.3 of {{!RFC6052}}.
-The IPv6-only recursive resolver should send a query to the converted IPv6 address.
+
+* Concatenate the prefix, the 32 bits of the IPv4 address, and the suffix (if needed) to obtain a 128-bit address.
+
+* If the prefix length is less than 96 bits, insert the null octet "u" at the appropriate position (bits 64 to 71), thus causing the least significant octet to be excluded, as documented in Figure 1 of {{!RFC6052}}.
+
+After the synthesis is done the IPv6-only recursive resolver should send a query to the converted IPv6 address.
 
 ## Use of the recursive resolver as DNS64
 

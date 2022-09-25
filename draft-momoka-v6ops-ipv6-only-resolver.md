@@ -55,12 +55,10 @@ This mechanism allows IPv6 only recursive resolvers to initiate communications t
 
 
 This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation {{!RFC6052}}.
-When a specific DNS zone is only served by an IPv4 only name server, an IPv6 only recursive resolver cannot resolve that zone due to having noaccess to an IPv4 network.
-However by performing IPv4 to IPv6 translation {{!RFC6052}} and utilizing the NAT64 {{!NAT64=RFC6146}} this will be possible.
+When a specific DNS zone is only served by an IPv4 only authoritative name server, an IPv6 only recursive resolver cannot resolve that zone due to having no　access to an IPv4 network.
+However by performing IPv4 to IPv6 translation {{!RFC6052}} and utilizing the NAT64 {{!NAT64=RFC6146}} accessing a IPv4 only authoritative name server will be possible.
 
-This mechanism allows an IPv6 only recursive resolver
-(i.e., a host with a networking stack that only implements IPv6, or a host with a networking stack that implements both protocols but with only IPv6 connectivity)
-to initiate communications to an IPv4-only authoritative name server.
+
 
 
 # Motivation and Problem Solved
@@ -73,19 +71,20 @@ However, the deployment of IPv6-only networks is also in progress, as demonstrat
 Operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
 
 
-A recursive resolver is one of the applications that requires IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.” This is because some authoritative servers do not support IPv6.  As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6 because they only have IPv4 addresses.
+A recursive resolver is one of the applications that requires IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
+This is because some authoritative servers do not support IPv6.
+As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6 because they only have IPv4 reachability.
 
-This document provides insight on operating an recursive resolver inside a IPv6 only resolver.
+The current situation where a recursive resolver cannot be operated without IPv4 may hinder the operation of a network's own recursive resolver in an IPv6-only network.
+Therefore, this document describes how recursive resolvers can be used without any issues in IPv6 only networks by utilizing NAT64.
+
+
 
 
 The NAT64/DNS64 mechanism is used to enable IPv6-only clients in a network to communicate with remote IPv4 only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT [RFC8683] is used).
 
-
-
-We propose an IPv6-only network-compatible recursive resolver implementation. With this implementation, the IPv6-only recursive resolver will be able to send queries to IPv4-only authoritative name servers. This is accomplished by the resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
-
-
-
+This problem can be solved by the recursive resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
+With this implementation a recursive resolver can be operated even inside an IPv6-only network.
 
 # Conventions and Definitions
 
@@ -93,9 +92,40 @@ We propose an IPv6-only network-compatible recursive resolver implementation. Wi
 
 # Normative Specification
 
-## The network topology this document refers to
-In examples of past RFCs name resolvers have always had as IPv4 address.
-All three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is necessary to consider the existence of an IPv6 single-stack full-service resolver with DNS64 capabilities.
+## Generation of the IPv6 Representations of IPv4 Addresses
+
+
+### Resolveing queries and finding an Authoritative server with only IPv4 addresses.
+
+
+By default, DNS64
+   implementations MUST NOT synthesize AAAA RRs when real AAAA RRs
+   exist.
+
+### Obtaining the Pref64::/n
+The resolver can recognize the Pref64::/n using static configuration or other or by using RFC7225 or RFC8781.
+Because these require a resolver to function, using RFC7050 or draft-hunek-v6ops-nat64-srv connot be successful.
+
+
+### Performing the Synthesis
+TODO
+
+Use {{!RFC6052}}.
+
+## Use of the recursive resolver as DNS64
+
+TODO:
+
+Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
+
+
+# Deployment Notes
+TODO
+
+
+## Deployment Scenarios and Examples
+In examples of past RFCs name resolvers have always had an IPv4 address.
+For example all three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is necessary to consider the existence of an IPv6 single-stack full-service resolver with DNS64 capabilities.
 
 ~~~ drawing
              +---------------------+         +---------------+
@@ -131,7 +161,7 @@ All three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is
 ~~~
 {: #example-topologies-in-RFC6147-2 title="Example topology of use of DNS64 described in RFC6147 Section7.2"}
 
-However in this RFC we consider a topology where the recursive resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only IPv4aaS.
+However in this RFC we consider a IPv6-only network where the recursive resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only the NAT64 device.
 
 ~~~ drawing
              +-------------------------+         +---------------+
@@ -150,52 +180,13 @@ However in this RFC we consider a topology where the recursive resolver is insid
 ~~~
 {: #ipv6oly-resolver-example-topology title="The topology we want to achieve"}
 
-
-## Generation of the IPv6 Representations of IPv4 Addresses
-
-
-### Resolveing AAAA Queries to an authoritative name server.
-TODO:
-
-To know if the server has IPv6 or has only IPv4, follow 5.1 of RFC6147.
-
-TODO
-
-This mechanism may change for doing so for authoritative servers. Will make sure to document that.
-
-### Obtaining the Pref64::/n
-The resolver can recognize the Pref64::/n using static configuration or other or by using RFC7225 or RFC8781.
-Because these require a resolver to function, using RFC7050 or draft-hunek-v6ops-nat64-srv connot be successful.
-
-
-### Performing the Synthesis
-TODO
-
-Use {{!RFC6052}}.
-
-## Use of the recursive resolver as DNS64
-
-TODO:
-
-Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
-
-
-# Deployment Notes
-TODO
-
-
-# Deployment Scenarios and Examples
-TODO
-
-Add deployment example topologoies.
-
-The resolver will be inside the IPv6 only network and not on the edge with IPv4.
-
 # Security Considerations
 
 TODO Security
 
 DNSSEC Validators and DNS64.
+
+This algorithm does not altere any part of the DNS message but only change the packet type from IPv4 to IPv6 and the destination IP Address from an IPv4 address to the synthesised IPv6 address.
 
 
 # IANA Considerations
@@ -203,7 +194,7 @@ DNSSEC Validators and DNS64.
 This document has no IANA actions.
 
 # Implementation Status
-TODO: write this part and mail Bind.
+TODO: write this part and mail BIND.
 
 Bind has an WIP branch.
 

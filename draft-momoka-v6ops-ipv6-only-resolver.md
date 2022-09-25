@@ -39,7 +39,8 @@ normative:
 informative:
   I-D.ietf-v6ops-ipv6-deployment:
     display: I-D.ietf-v6ops-ipv6-deployment
-
+  I-D.draft-hunek-v6ops-nat64-srv:
+    display: I-D.draft-hunek-v6ops-nat64-srv
 
 
 
@@ -63,10 +64,8 @@ However by performing IPv4 to IPv6 translation {{!RFC6052}} and utilizing the NA
 
 # Motivation and Problem Solved
 Over the past decade, IPv6 capabilities have been widely deployed, and IPv6 traffic is now growing more quickly than IPv4 traffic.
-
 An overview of IPv6 deployment status and how network operators are implementing IPv6 is provided by the document {{?I-D.ietf-v6ops-ipv6-deployment}}.
-
-Most IPv6 deployments as of 2022 use a dual-stack strategy [RFC4213].
+Most IPv6 deployments as of 2022 use a dual-stack strategy {{?RFC4213}}.
 However, the deployment of IPv6-only networks is also in progress, as demonstrated by draft-XIE-v6ops-framework-md-ipv6only-underla.
 Operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
 
@@ -81,8 +80,8 @@ Therefore, this document describes how recursive resolvers can be used without a
 
 
 
-The NAT64/DNS64 mechanism is used to enable IPv6-only clients in a network to communicate with remote IPv4 only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT [RFC8683] is used).
-
+The NAT64/DNS64 mechanism is used to enable IPv6-only clients in a network to communicate with remote IPv4 only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC8683}} is used).
+A recursive resolver cannot use the DNS64 because a it is a service that uses literal IP addresses (and also because the DNS64 depends on a recursive resolver).
 This problem can be solved by the recursive resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
 With this implementation a recursive resolver can be operated even inside an IPv6-only network.
 
@@ -97,14 +96,17 @@ With this implementation a recursive resolver can be operated even inside an IPv
 
 ### Resolveing queries and finding an Authoritative server with only IPv4 addresses.
 
+Before the server sends queries it may sort the SLIST data structure to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
 
-By default, DNS64
-   implementations MUST NOT synthesize AAAA RRs when real AAAA RRs
-   exist.
+By default, synthesizing implementation SHOULD NOT synthesize IPv4 addresses of an authoritative name server if the authoritative name server also has an IPv6 address.
 
-### Obtaining the Pref64::/n
-The resolver can recognize the Pref64::/n using static configuration or other or by using RFC7225 or RFC8781.
-Because these require a resolver to function, using RFC7050 or draft-hunek-v6ops-nat64-srv connot be successful.
+### Obtaining the Pref64::/n of the NAT64
+
+The recursive resolver can obtain the Pref64::/n used by the NAT64 of the network by either static configuration or by using discovery mechanisms.
+Static configuration may be the most likely scenario given that the recursive resolver server may also serve as the DNS64 server.
+
+The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options the resolver has if it wants to use a discovery mechanism to find the Pref64::/n.
+Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function because these echanisms need a resolver to work.
 
 
 ### Performing the Synthesis
@@ -113,8 +115,6 @@ TODO
 Use {{!RFC6052}}.
 
 ## Use of the recursive resolver as DNS64
-
-TODO:
 
 Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!RFC6147}}.
 

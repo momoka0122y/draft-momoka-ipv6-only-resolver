@@ -89,16 +89,19 @@ With this implementation a recursive resolver can be operated even inside an IPv
 
 {::boilerplate bcp14-tagged}
 
-# Normative Specification
+# Solution with existing protocols
+This section provides an introduction to the IPv6-only resolver mechanism.
+We'll assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
+The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
+The IPv6-only resolver proposed in this document performes the IPv4 to IPv6 sysnthesis in order for the resolver to communicate with IPv4 servers via NAT64.
 
-## Generation of the IPv6 Representations of IPv4 Addresses
-
-
-### Resolveing queries and finding an Authoritative server with only IPv4 addresses.
+## Finding an Authoritative server with only IPv4 addresses
 
 Before the server sends queries it may sort the SLIST data structure to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
 When the server that the resolver wish to send queries only has an IPv4 address it should synthesise the IPv4 address to the converted IPv6 address.
 By default, synthesizing implementation SHOULD NOT synthesize IPv4 addresses of an authoritative name server if the authoritative name server also has an IPv6 address.
+
+## Generation of the IPv6 Representations of IPv4 Addresses
 
 ### Obtaining the Pref64::/n of the NAT64
 
@@ -122,7 +125,12 @@ After the synthesis is done the IPv6-only recursive resolver should send a query
 ## Use of the recursive resolver as DNS64
 
 Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}}.
+When a AAAA record for the queried name cannot be obtained, DNS64 is used to generate one containing the responder's actual IPv4 address.
 
+If there are no AAAA records available for the target node (which is usually the case if the target node is an IPv4-only node), DNS64 will look for A records.
+DNS64 creates a AAAA RR from the information in the A RR by generating an IPv6 address for each A record discovered.
+The owner name of a generated AAAA RR is the same as that of of the original A RR, but the AAAA RR includes an IPv6 representation of the IPv4 address contained in the original A RR.
+The IPv6 representation of the IPv4 address is generated algorithmically using the IPv4 address and additional DNS64 parameters.
 
 # Deployment Notes
 TODO
@@ -189,7 +197,7 @@ However in this RFC we consider a IPv6-only network where the recursive resolver
 
 TODO Security
 
-DNSSEC Validators and DNS64.
+Write about DNSSEC Validators and DNS64.
 
 This algorithm does not altere any part of the DNS message but only change the packet type from IPv4 to IPv6 and the destination IP Address from an IPv4 address to the synthesised IPv6 address.
 

@@ -21,13 +21,13 @@ author:
     fullname:
       :: 山本 桃歌
       ascii: Momoka Yamamoto
-    organization: WIDE
+    organization: The University of Tokyo/WIDE Project
     email: momoka.my6@gmail.com
 
  -
     ins: Y. Toyota
     name: Toyota Yasunobu
-    organization: WIDE
+    organization: Keio University/WIDE Project
     email: yasnyan@sfc.wide.ad.jp
 
 
@@ -47,17 +47,17 @@ informative:
 --- abstract
 
 By performing IPv4 to IPv6 translation, IPv6 only recursive resolvers can operate in a NAT64 environment.
-When a specific DNS zone is only served by an IPv4 only name server, the recursive resolver will translate the IPv4 address to IPv6 in order to access the authoritative name server's IPv4 address via NAT64.
-This mechanism allows IPv6 only recursive resolvers to initiate communications to IPv4 only authoritative name servers.
+When a specific DNS zone is only served by an IPv4 only name server, the recursive resolver will translate the IPv4 address to IPv6 in order to access the authoritative server's IPv4 address via NAT64.
+This mechanism allows IPv6 only recursive resolvers to initiate communications to IPv4 only authoritative servers.
 
 --- middle
 
 # Introduction
 
 
-This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative name server by performing IPv4 to IPv6 translation {{!RFC6052}}.
-When a specific DNS zone is only served by an IPv4 only authoritative name server, an IPv6 only recursive resolver cannot resolve that zone due to having no　access to an IPv4 network.
-However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing a IPv4 only authoritative name server will be possible.
+This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
+When a specific DNS zone is only served by an IPv4 only authoritative server, an IPv6 only recursive resolver cannot resolve that zone due to having no　access to an IPv4 network.
+However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing a IPv4 only authoritative server will be possible.
 
 
 
@@ -94,12 +94,13 @@ This section provides an introduction to the IPv6-only resolver mechanism.
 We'll assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
 The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
 The IPv6-only resolver proposed in this document performes the IPv4 to IPv6 sysnthesis in order for the resolver to communicate with IPv4 servers via NAT64.
+By using NAT64, this IPv6-only recursive resolver can be considered dual stack in the sense of RFC 3901.
 
 ## Finding an Authoritative server with only IPv4 addresses
 
-Before the server sends queries it may sort the SLIST data structure to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
-When the server that the resolver wish to send queries only has an IPv4 address it should synthesise the IPv4 address to the converted IPv6 address.
-By default, synthesizing implementation SHOULD NOT synthesize IPv4 addresses of an authoritative name server if the authoritative name server also has an IPv6 address.
+Before the server sends queries it may sort the SLIST data structure described in {{?RFC1034}} and {{?RFC1035}} to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
+If the resolver only finds an A record for the authoritative server, the resolver may perform address synthesis to the IPv4 address.
+It is not recommneded to synthesize IPv4 addresses of an authoritative server if the authoritative server also has an IPv6 address.
 
 ## Generation of the IPv6 Representations of IPv4 Addresses
 
@@ -114,23 +115,17 @@ Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function be
 
 ### Performing the Synthesis
 
-Performing the addres translation should follow Section 2.3 of {{!RFC6052}}.
+Performing the addres translation can be done by following Section 2.3 of {{!RFC6052}}.
 
 * Concatenate the prefix, the 32 bits of the IPv4 address, and the suffix (if needed) to obtain a 128-bit address.
 
 * If the prefix length is less than 96 bits, insert the null octet "u" at the appropriate position (bits 64 to 71), thus causing the least significant octet to be excluded, as documented in Figure 1 of {{!RFC6052}}.
 
-After the synthesis is done the IPv6-only recursive resolver should send a query to the converted IPv6 address.
+After the synthesis is done the IPv6-only recursive resolver can send a query to the converted IPv6 address.
 
 ## Use of the recursive resolver as DNS64
 
-Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}}.
-When a AAAA record for the queried name cannot be obtained, DNS64 is used to generate one containing the responder's actual IPv4 address.
-
-If there are no AAAA records available for the target node (which is usually the case if the target node is an IPv4-only node), DNS64 will look for A records.
-DNS64 creates a AAAA RR from the information in the A RR by generating an IPv6 address for each A record discovered.
-The owner name of a generated AAAA RR is the same as that of of the original A RR, but the AAAA RR includes an IPv6 representation of the IPv4 address contained in the original A RR.
-The IPv6 representation of the IPv4 address is generated algorithmically using the IPv4 address and additional DNS64 parameters.
+Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}} when a AAAA record is queried from a STUB resolver but the domain only has an A record.
 
 # Deployment Notes
 TODO
@@ -141,57 +136,57 @@ In examples of past RFCs name resolvers have always had an IPv4 address.
 For example all three use cases for DNS64 in RFC 6147 are dual-stack name servers, but it is necessary to consider the existence of an IPv6 single-stack full-service resolver with DNS64 capabilities.
 
 ~~~ drawing
-             +---------------------+         +---------------+
-             |IPv6 network         |         |    IPv4       |
-             |           |  +-------------+  |  Internet     |
-             |           |--| Name server |--|               |
-             |           |  | with DNS64  |  |  +----+       |
-             |  +----+   |  +-------------+  |  | H2 |       |
-             |  | H1 |---|         |         |  +----+       |
-             |  +----+   |   +------------+  |  192.0.2.1    |
-             |           |---| IPv6/IPv4  |--|               |
-             |           |   | Translator |  |               |
-             |           |   +------------+  |               |
-             |           |         |         |               |
-             +---------------------+         +---------------+
+            +---------------------+         +---------------+
+            |IPv6 network         |         |    IPv4       |
+            |           |  +-------------+  |  Internet     |
+            |           |--| Name server |--|               |
+            |           |  | with DNS64  |  |  +----+       |
+            |  +----+   |  +-------------+  |  | H2 |       |
+            |  | H1 |---|         |         |  +----+       |
+            |  +----+   |   +------------+  |  192.0.2.1    |
+            |           |---| IPv6/IPv4  |--|               |
+            |           |   | Translator |  |               |
+            |           |   +------------+  |               |
+            |           |         |         |               |
+            +---------------------+         +---------------+
 ~~~
-{: #example-topologies-in-RFC6147-1 title="Example topology of use of DNS64 described in RFC6147 Section7.1"}
+{: #example-topologies-in-RFC6147-1 title="Example network setup of the use of DNS64 described in RFC6147 Section7.1"}
 
 ~~~ drawing
-             +---------------------+         +---------------+
-             |IPv6 network         |         |    IPv4       |
-             |           |     +--------+    |  Internet     |
-             |           |-----| Name   |----|               |
-             | +-----+   |     | server |    |  +----+       |
-             | | H1  |   |     +--------+    |  | H2 |       |
-             | |with |---|         |         |  +----+       |
-             | |DNS64|   |   +------------+  |  192.0.2.1    |
-             | +----+    |---| IPv6/IPv4  |--|               |
-             |           |   | Translator |  |               |
-             |           |   +------------+  |               |
-             |           |         |         |               |
-             +---------------------+         +---------------+
+            +---------------------+         +---------------+
+            |IPv6 network         |         |    IPv4       |
+            |           |     +--------+    |  Internet     |
+            |           |-----| Name   |----|               |
+            | +-----+   |     | server |    |  +----+       |
+            | | H1  |   |     +--------+    |  | H2 |       |
+            | |with |---|         |         |  +----+       |
+            | |DNS64|   |   +------------+  |  192.0.2.1    |
+            | +----+    |---| IPv6/IPv4  |--|               |
+            |           |   | Translator |  |               |
+            |           |   +------------+  |               |
+            |           |         |         |               |
+            +---------------------+         +---------------+
 ~~~
-{: #example-topologies-in-RFC6147-2 title="Example topology of use of DNS64 described in RFC6147 Section7.2"}
+{: #example-topologies-in-RFC6147-2 title="Example network setup of the use of DNS64 described in RFC6147 Section7.2"}
 
-However in this RFC we consider a IPv6-only network where the recursive resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only the NAT64 device.
+However in this document we consider an IPv6-only network where the recursive resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only the NAT64 device.
 
 ~~~ drawing
-             +-------------------------+         +---------------+
-             |IPv6 network             |         |    IPv4       |
-             |                         |         |  Internet     |
-             |                         |         |               |
-             | +---------+   |         |         |  +----+       |
-             | |IPv6-only|   |         |         |  | H2 |       |
-             | |Name     |   |         |         |  +----+       |
-             | |server   |---|   +------------+  |  192.0.2.1    |
-             | |with     |   |---| IPv6/IPv4  |--|               |
-             | |DNS64    |   |   | Translator |  |               |
-             | +---------+       +------------+  |               |
-             |                         |         |               |
-             +-------------------------+         +---------------+
+      +--------------------------+         +----------------------+
+      | IPv6 network             |         |    IPv4              |
+      |                          |         |  Internet            |
+      |                          |         |                      |
+      | +----------+             |         |  +--------------+    |
+      | |IPv6-only |   |         |         |  |Authoritative |    |
+      | |Recursive |   |         |         |  |server        |    |
+      | |resolver  |---|   +------------+  |  +--------------+    |
+      | |with      |   |---| IPv6/IPv4  |--|  192.0.2.1           |
+      | |DNS64     |   |   | Translator |  |                      |
+      | +----------+       +------------+  |                      |
+      |                          |         |                      |
+      +--------------------------+         +----------------------+
 ~~~
-{: #ipv6oly-resolver-example-topology title="The topology we want to achieve"}
+{: #ipv6oly-resolver-example-topology title="The network of setop this document r"}
 
 # Security Considerations
 

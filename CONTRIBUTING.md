@@ -44,3 +44,17 @@ technical issues needs to occur on the mailing list.
 
 You might also like to familiarize yourself with other
 [Working Group documents](https://datatracker.ietf.org/wg/v6ops/documents/).
+## Working Group Information
+
+Discussion of this work occurs on the [IPv6 Operations
+Working Group mailing list](mailto:v6ops@ietf.org)
+([archive](https://mailarchive.ietf.org/arch/browse/v6ops/),
+[subscribe](https://www.ietf.org/mailman/listinfo/v6ops)).
+In addition to contributions in GitHub, you are encouraged to participate in
+discussions there.
+
+**Note**: Some working groups adopt a policy whereby substantive discussion of
+technical issues needs to occur on the mailing list.
+
+You might also like to familiarize yourself with other
+[Working Group documents](https://datatracker.ietf.org/wg/v6ops/documents/).

@@ -41,6 +41,8 @@ informative:
     display: ietf-v6ops-ipv6-deployment
   I-D.draft-hunek-v6ops-nat64-srv:
     display: draft-hunek-v6ops-nat64-srv
+  I-D.draft-XIE-v6ops-framework-md-ipv6only-underla:
+    display: draft-XIE-v6ops-framework-md-ipv6only-underla
 
 
 
@@ -66,7 +68,7 @@ However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing
 Over the past decade, IPv6 capabilities have been widely deployed, and IPv6 traffic is now growing more quickly than IPv4 traffic.
 An overview of IPv6 deployment status and how network operators are implementing IPv6 is provided by the document {{?I-D.ietf-v6ops-ipv6-deployment}}.
 Most IPv6 deployments as of 2022 use a dual-stack strategy {{?RFC4213}}.
-However, the deployment of IPv6-only networks is also in progress, as demonstrated by draft-XIE-v6ops-framework-md-ipv6only-underla.
+However, the deployment of IPv6-only networks is also in progress, as demonstrated by {{?I-D.draft-XIE-v6ops-framework-md-ipv6only-underla}}.
 Operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
 
 
@@ -110,7 +112,7 @@ The recursive resolver can obtain the Pref64::/n used by the NAT64 of the networ
 Static configuration may be the most likely scenario given that the recursive resolver server may also serve as the DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options the resolver has if it wants to use a discovery mechanism to find the Pref64::/n.
-Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function because these echanisms need a resolver to work.
+Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function because these mechanisms need a resolver to work.
 
 
 ### Performing the Synthesis

@@ -1,11 +1,11 @@
-# IPv6 only resolver under NAT64
+# IPv6 only recursive resolver under NAT64
 
-This is the working area for the individual Internet-Draft, "IPv6 only resolver under NAT64".
+This is the working area for the individual Internet-Draft, "IPv6 only recursive resolver under NAT64".
 
-* [Editor's Copy](https://momoka0122y.github.io/draft-momoka-ipv6-only-resolver/#go.draft-momoka-dnsop-ipv6-only-resolver.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-momoka-dnsop-ipv6-only-resolver)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-momoka-dnsop-ipv6-only-resolver)
-* [Compare Editor's Copy to Individual Draft](https://momoka0122y.github.io/draft-momoka-ipv6-only-resolver/#go.draft-momoka-dnsop-ipv6-only-resolver.diff)
+* [Editor's Copy](https://momoka0122y.github.io/draft-momoka-ipv6-only-resolver/#go.draft-momoka-v6ops-ipv6-only-resolver.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-momoka-v6ops-ipv6-only-resolver)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-momoka-v6ops-ipv6-only-resolver)
+* [Compare Editor's Copy to Individual Draft](https://momoka0122y.github.io/draft-momoka-ipv6-only-resolver/#go.draft-momoka-v6ops-ipv6-only-resolver.diff)
 
 
 ## Contributing

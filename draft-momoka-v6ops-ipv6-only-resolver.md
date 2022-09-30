@@ -58,7 +58,7 @@ This mechanism allows IPv6 only recursive resolvers to initiate communications t
 
 
 This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
-When a specific DNS zone is only served by an IPv4 only authoritative server, an IPv6 only recursive resolver cannot resolve that zone due to having no　access to an IPv4 network.
+When a specific DNS zone is only served by an IPv4 only authoritative server (has only an A record), an IPv6 only recursive resolver cannot resolve that zone due to having no access to an IPv4 network.
 However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing a IPv4 only authoritative server will be possible.
 
 

@@ -59,7 +59,7 @@ This mechanism allows IPv6 only recursive resolvers to initiate communications t
 
 This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
 When a specific DNS zone is only served by an IPv4 only authoritative server (has only an A record), an IPv6 only recursive resolver cannot resolve that zone due to having no access to an IPv4 network.
-However by performing IPv4 to IPv6 translation and utilizing the NAT64 accessing a IPv4 only authoritative server will be possible.
+However by performing IPv4 to IPv6 translation and utilizing the NAT64, accessing a IPv4 only authoritative server will be possible.
 
 
 
@@ -69,15 +69,15 @@ Over the past decade, IPv6 capabilities have been widely deployed, and IPv6 traf
 An overview of IPv6 deployment status and how network operators are implementing IPv6 is provided by the document {{?I-D.ietf-v6ops-ipv6-deployment}}.
 Most IPv6 deployments as of 2022 use a dual-stack strategy {{?RFC4213}}.
 However, the deployment of IPv6-only networks is also in progress, as demonstrated by {{?I-D.draft-XIE-v6ops-framework-md-ipv6only-underla}}.
-Operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
+By operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
 
 
 A recursive resolver is one of the applications that requires IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
 This is because some authoritative servers do not support IPv6.
-As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6 because they only have IPv4 reachability.
+As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6.
 
-The current situation where a recursive resolver cannot be operated without IPv4 may hinder the operation of a network's own recursive resolver in an IPv6-only network.
-Therefore, this document describes how recursive resolvers can be used without any issues in IPv6 only networks by utilizing NAT64.
+The current situation where a recursive resolver cannot be operated without IPv4 reachability may hinder the operation of a network's own recursive resolver in an IPv6-only network.
+Therefore, this document describes how recursive resolvers can be used without any issues in IPv6-only networks by utilizing NAT64.
 
 
 
@@ -87,21 +87,17 @@ A recursive resolver cannot use the DNS64 because a it is a service that uses 
 This problem can be solved by the recursive resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
 With this implementation a recursive resolver can be operated even inside an IPv6-only network.
 
-# Conventions and Definitions
-
-{::boilerplate bcp14-tagged}
-
 # Solution with existing protocols
 This section provides an introduction to the IPv6-only resolver mechanism.
 We'll assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
 The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
-The IPv6-only resolver proposed in this document performes the IPv4 to IPv6 sysnthesis in order for the resolver to communicate with IPv4 servers via NAT64.
+The IPv6-only resolver proposed in this document performes the IPv4 to IPv6 synthesis in order for the resolver to communicate with IPv4 servers via NAT64.
 By using NAT64, this IPv6-only recursive resolver can be considered dual stack in the sense of RFC 3901.
 
 ## Finding an Authoritative server with only IPv4 addresses
 
-Before the server sends queries it may sort the SLIST data structure described in {{?RFC1034}} and {{?RFC1035}} to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
-If the resolver only finds an A record for the authoritative server, the resolver may perform address synthesis to the IPv4 address.
+Before the server sends queries it may sort the SLIST data structure described in {{?RFC1034}} to use the servers with IPv6 addresses first and use servers with only an IPv4 address to be used later.
+If the resolver only finds an A record for the authoritative server, the resolver should perform address synthesis to the IPv4 address of the authoritative server.
 It is not recommneded to synthesize IPv4 addresses of an authoritative server if the authoritative server also has an IPv6 address.
 
 ## Generation of the IPv6 Representations of IPv4 Addresses
@@ -112,16 +108,12 @@ The recursive resolver can obtain the Pref64::/n used by the NAT64 of the networ
 Static configuration may be the most likely scenario given that the recursive resolver server may also serve as the DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options the resolver has if it wants to use a discovery mechanism to find the Pref64::/n.
-Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} won't function because these mechanisms need a resolver to work.
+Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} may not function because these mechanisms need a resolver to work.
 
 
 ### Performing the Synthesis
 
 Performing the addres translation can be done by following Section 2.3 of {{!RFC6052}}.
-
-* Concatenate the prefix, the 32 bits of the IPv4 address, and the suffix (if needed) to obtain a 128-bit address.
-
-* If the prefix length is less than 96 bits, insert the null octet "u" at the appropriate position (bits 64 to 71), thus causing the least significant octet to be excluded, as documented in Figure 1 of {{!RFC6052}}.
 
 After the synthesis is done the IPv6-only recursive resolver can send a query to the converted IPv6 address.
 
@@ -188,7 +180,7 @@ However in this document we consider an IPv6-only network where the recursive re
       |                          |         |                      |
       +--------------------------+         +----------------------+
 ~~~
-{: #ipv6oly-resolver-example-topology title="The network of setop this document r"}
+{: #ipv6oly-resolver-example-topology title="A network example this document refers to"}
 
 # Security Considerations
 
@@ -196,7 +188,8 @@ TODO Security
 
 Write about DNSSEC Validators and DNS64.
 
-This algorithm does not altere any part of the DNS message but only change the packet type from IPv4 to IPv6 and the destination IP Address from an IPv4 address to the synthesised IPv6 address.
+This algorithm does not alter any part of the DNS message but only change the packet type from IPv4 to IPv6 and the destination IP Address from an IPv4 address to the synthesised IPv6 address so there shouldn't be any problems with DNSSEC.
+
 
 
 # IANA Considerations

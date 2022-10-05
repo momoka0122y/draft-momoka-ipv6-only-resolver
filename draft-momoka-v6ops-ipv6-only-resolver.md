@@ -1,5 +1,5 @@
 ---
-title: "IPv6 only recursive resolver under NAT64"
+title: "IPv6 only iterative resolver utilising NAT64"
 abbrev: IPv6 only Resolver
 docname: draft-momoka-v6ops-ipv6-only-resolver-latest
 category: info
@@ -48,21 +48,29 @@ informative:
 
 --- abstract
 
-By performing IPv4 to IPv6 translation, IPv6 only recursive resolvers can operate in a NAT64 environment.
-When a specific DNS zone is only served by an IPv4 only name server, the recursive resolver will translate the IPv4 address to IPv6 in order to access the authoritative server's IPv4 address via NAT64.
-This mechanism allows IPv6 only recursive resolvers to initiate communications to IPv4 only authoritative servers.
+By performing IPv4 to IPv6 translation, IPv6 only iterative resolvers can operate in an IPv6-only environment.
+When a specific DNS zone is only served by an IPv4-only authoritative server, the iterative resolver will translate the IPv4 address to IPv6 in order to access the authoritative server's IPv4 address via NAT64.
+This mechanism allows IPv6 only iterative resolvers to initiate communications to IPv4 only authoritative servers.
 
 --- middle
 
 # Introduction
 
 
-This document describes how an IPv6 only recursive resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
-When a specific DNS zone is only served by an IPv4 only authoritative server (has only an A record), an IPv6 only recursive resolver cannot resolve that zone due to having no access to an IPv4 network.
-However by performing IPv4 to IPv6 translation and utilizing the NAT64, accessing a IPv4 only authoritative server will be possible.
+This document describes how an IPv6-only iterative resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4 only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
+When a specific DNS zone is only served by an IPv4 only authoritative server (has only an A record), an IPv6 only iterative resolver cannot resolve that zone due to having no access to an IPv4 network.
+However by performing IPv4 to IPv6 translation and utilizing the NAT64, accessing an IPv4 only authoritative server will be possible.
 
 
+# Terminology
 
+* Iterative resolver:    A DNS server that repeatedly makes non-recursive queries and follows referrals and/or aliases.  The iterative resolution algorithm is described in Section 5.3.3 of {{?RFC1034}}
+
+* IPv6-only iterative resolvers :    Iterative resolvers that only have IPv6 connectivity.
+
+* IPv6/IPv4 translator:     A device that translates IPv6 packets to IPv4 packets and vice versa. It is only required that the communication initiated from the IPv6 side be supported.
+
+* IPv4-only authoritative server:    An authoritative server that only has IPv4 connectivity, or an authoritative server that only has an A record registered so can only be accessed by IPv4.
 
 # Motivation and Problem Solved
 Over the past decade, IPv6 capabilities have been widely deployed, and IPv6 traffic is now growing more quickly than IPv4 traffic.
@@ -72,27 +80,30 @@ However, the deployment of IPv6-only networks is also in progress, as demonstrat
 By operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations in comparison to a dual-stack environment.
 
 
-A recursive resolver is one of the applications that requires IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
+An iterative resolver is one of the applications that requires IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
 This is because some authoritative servers do not support IPv6.
 As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6.
-
-The current situation where a recursive resolver cannot be operated without IPv4 reachability may hinder the operation of a network's own recursive resolver in an IPv6-only network.
-Therefore, this document describes how recursive resolvers can be used without any issues in IPv6-only networks by utilizing NAT64.
+Without utilization of the NAT64, IPv6-only recursive resolvers need to forward queries to a dual stack recursive name server actually performing the iterative queries.
 
 
+The current situation where an iterative resolver cannot be operated without IPv4 reachability may hinder the operation of a network's own iterative resolver in an IPv6-only network.
+Therefore, this document describes how iterative resolvers can be used without any issues in IPv6-only networks by utilizing NAT64.
 
 
-The NAT64/DNS64 mechanism is used to enable IPv6-only clients in a network to communicate with remote IPv4 only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC8683}} is used).
-A recursive resolver cannot use the DNS64 because a it is a service that uses literal IP addresses (and also because the DNS64 depends on a recursive resolver).
-This problem can be solved by the recursive resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
-With this implementation a recursive resolver can be operated even inside an IPv6-only network.
+
+
+
+The NAT64/DNS64 mechanism is used to enable IPv6-only clients in a network to communicate with remote IPv4-only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC8683}} is used).
+An iterative resolver cannot use the DNS64 because it is a service that uses literal IP addresses (and also because the DNS64 may depend on the resolver itself).
+This problem can be solved by the iterative resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
+With this implementation an iterative resolver can be operated even inside an IPv6-only network.
 
 # Solution with existing protocols
-This section provides an introduction to the IPv6-only resolver mechanism.
+This section provides the mechanism of an IPv6-only resolver utilizing the NAT64.
 We'll assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
 The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
 The IPv6-only resolver proposed in this document performes the IPv4 to IPv6 synthesis in order for the resolver to communicate with IPv4 servers via NAT64.
-By using NAT64, this IPv6-only recursive resolver can be considered dual stack in the sense of RFC 3901.
+By using NAT64, this IPv6-only iterative resolver can be considered dual stack in the sense of {{!RFC3901}}.
 
 ## Finding an Authoritative server with only IPv4 addresses
 
@@ -104,22 +115,21 @@ It is not recommneded to synthesize IPv4 addresses of an authoritative server if
 
 ### Obtaining the Pref64::/n of the NAT64
 
-The recursive resolver can obtain the Pref64::/n used by the NAT64 of the network by either static configuration or by using discovery mechanisms.
-Static configuration may be the most likely scenario given that the recursive resolver server may also serve as the DNS64 server.
+The iterative resolver can obtain the Pref64::/n used by the NAT64 of the network by either static configuration or by using discovery mechanisms.
+Static configuration may be the most likely scenario given that the iterative resolver server may also serve as a DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options the resolver has if it wants to use a discovery mechanism to find the Pref64::/n.
-Using the {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} may not function because these mechanisms need a resolver to work.
+Using the mechanims described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} may not function because these need a resolver to work.
 
 
 ### Performing the Synthesis
 
 Performing the addres translation can be done by following Section 2.3 of {{!RFC6052}}.
+After the synthesis is done the IPv6-only iterative resolver can send a query to the converted IPv6 address.
 
-After the synthesis is done the IPv6-only recursive resolver can send a query to the converted IPv6 address.
+## Use of the iterative resolver as DNS64
 
-## Use of the recursive resolver as DNS64
-
-Since the recursive resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}} when a AAAA record is queried from a STUB resolver but the domain only has an A record.
+Since the iterative resolver will be used inside an IPv6 only network, the server can also perform DNS64 {{!DNS64=RFC6147}} when a AAAA record is queried from a STUB resolver but the domain only has an A record.
 
 # Deployment Notes
 TODO
@@ -163,7 +173,7 @@ For example all three use cases for DNS64 in RFC 6147 are dual-stack name server
 ~~~
 {: #example-topologies-in-RFC6147-2 title="Example network setup of the use of DNS64 described in RFC6147 Section7.2"}
 
-However in this document we consider an IPv6-only network where the recursive resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only the NAT64 device.
+However in this document we consider an IPv6-only network where the iterative resolver is inside the IPv6 only network and does not have an IPv4 address. This is to contain IPv4 management to only the NAT64 device.
 
 ~~~ drawing
       +--------------------------+         +----------------------+
@@ -172,11 +182,11 @@ However in this document we consider an IPv6-only network where the recursive re
       |                          |         |                      |
       | +----------+             |         |  +--------------+    |
       | |IPv6-only |   |         |         |  |Authoritative |    |
-      | |Recursive |   |         |         |  |server        |    |
+      | |Iterative |   |         |         |  |server        |    |
       | |resolver  |---|   +------------+  |  +--------------+    |
-      | |with      |   |---| IPv6/IPv4  |--|  192.0.2.1           |
-      | |DNS64     |   |   | Translator |  |                      |
-      | +----------+       +------------+  |                      |
+      | +----------+   |---| IPv6/IPv4  |--|  192.0.2.1           |
+      |                |   | Translator |  |                      |
+      |                    +------------+  |                      |
       |                          |         |                      |
       +--------------------------+         +----------------------+
 ~~~
@@ -213,3 +223,5 @@ https://github.com/NLnetLabs/unbound/issues/721
 {:numbered="false"}
 
 TODO acknowledge people.
+
+Thank you for reading this draft.

@@ -25,10 +25,11 @@ author:
     email: momoka.my6@gmail.com
 
  -
-    ins: Y. Toyota
-    name: Toyota Yasunobu
+    fullname:
+      :: 豊田 安信
+      ascii: Yasunobu Toyota
     organization: Keio University/WIDE Project
-    email: yasnyan@sfc.wide.ad.jp
+    email: yas-nyan@sfc.wide.ad.jp
 
 
 normative:

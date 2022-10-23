@@ -1,0 +1,83 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2022-10-23T00:42:42.297654+00:00",
+  "repo": "momoka0122y/draft-momoka-ipv6-only-resolver",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOH8F2T85A2skY",
+      "title": "Fix Y.Toyota's name and mail address",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/pull/1",
+      "state": "MERGED",
+      "author": "yas-nyan",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- use fullname (Kanji)\r\n- fix mail address",
+      "createdAt": "2022-10-15T07:08:30Z",
+      "updatedAt": "2022-10-15T07:08:46Z",
+      "baseRepository": "momoka0122y/draft-momoka-ipv6-only-resolver",
+      "baseRefName": "main",
+      "baseRefOid": "1e0b5598955fedff677f4e4fce66dc2c99793039",
+      "headRepository": "yas-nyan/draft-momoka-ipv6-only-resolver",
+      "headRefName": "main",
+      "headRefOid": "eccb5ab382b348ed720418988360dfd425680e08",
+      "closedAt": "2022-10-15T07:08:46Z",
+      "mergedAt": "2022-10-15T07:08:46Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "12bf4259a04a12bc6a99f8a5d66ab3581741454c"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}

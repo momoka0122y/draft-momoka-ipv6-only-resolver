@@ -35,8 +35,6 @@ author:
 normative:
 
 
-
-
 informative:
   I-D.ietf-v6ops-ipv6-deployment:
     display: ietf-v6ops-ipv6-deployment

@@ -5,8 +5,8 @@
 v6ops                                            山本 桃歌 (M. Yamamoto)
 Internet-Draft                      The University of Tokyo/WIDE Project
 Intended status: Informational                     豊田 安信 (Y. Toyota)
-Expires: 18 April 2023                      Keio University/WIDE Project
-                                                         15 October 2022
+Expires: 26 May 2023                        Keio University/WIDE Project
+                                                        22 November 2022
 
 
               IPv6 only iterative resolver utilising NAT64
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 April 2023.
+   This Internet-Draft will expire on 26 May 2023.
 
 Copyright Notice
 
@@ -339,17 +339,17 @@ Table of Contents
               T. Graf, "Framework of Multi-domain IPv6-only Underlay
               Networks and IPv4 as a Service", Work in Progress,
               Internet-Draft, draft-xie-v6ops-framework-md-ipv6only-
-              underlay-04, 14 September 2022,
+              underlay-05, 21 October 2022,
               <https://datatracker.ietf.org/doc/html/draft-xie-v6ops-
-              framework-md-ipv6only-underlay-04>.
+              framework-md-ipv6only-underlay-05>.
 
    [ietf-v6ops-ipv6-deployment]
               Fioccola, G., Volpato, P., Elkins, N., Martinez, J. P.,
               Mishra, G. S., and C. Xie, "IPv6 Deployment Status", Work
               in Progress, Internet-Draft, draft-ietf-v6ops-ipv6-
-              deployment-07, 29 July 2022,
+              deployment-08, 20 October 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-v6ops-
-              ipv6-deployment-07>.
+              ipv6-deployment-08>.
 
    [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
               STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987,

@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-12-18T00:25:32.265240+00:00",
+  "timestamp": "2022-12-20T00:26:45.873664+00:00",
   "repo": "momoka0122y/draft-momoka-ipv6-only-resolver",
   "labels": [
     {
@@ -49,7 +49,24 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOH8F2T85ZhaUe",
+      "title": "change to IPv6-only *capable* resolver",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/2",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "IPv6 only resolver - A resolver that only has an IPv6 address and can only send queries to IPv6-capable authoritative servers.\r\nIPv6-only *capable* resolver - The resolver we propose in this document which utilises that NAT64 by doing the synthesis.",
+      "createdAt": "2022-12-18T14:50:03Z",
+      "updatedAt": "2022-12-18T14:50:03Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,

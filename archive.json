@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-12-20T00:26:45.873664+00:00",
+  "timestamp": "2023-01-05T00:27:43.733216+00:00",
   "repo": "momoka0122y/draft-momoka-ipv6-only-resolver",
   "labels": [
     {
@@ -63,6 +63,38 @@
       "body": "IPv6 only resolver - A resolver that only has an IPv6 address and can only send queries to IPv6-capable authoritative servers.\r\nIPv6-only *capable* resolver - The resolver we propose in this document which utilises that NAT64 by doing the synthesis.",
       "createdAt": "2022-12-18T14:50:03Z",
       "updatedAt": "2022-12-18T14:50:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOH8F2T85aieX9",
+      "title": "Make it unambiguous in the text that we are talking about *stateful NAT64*",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/3",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "comment from Gabor LENCSE \r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/\r\n\r\n> In the draft, you mention *NAT64*. Seeing this, most people likely \r\n> think of *stateful NAT64*. A few (like me) thinks that it can be either \r\n> *stateful NAT64* [RFC6146] or *stateless NAT64* [RFC7915] (\"officially\" \r\n> called SIIT). I saw that you referred to RFC 6146, but I think it would \r\n> be worth making it unambiguous also in the text that you are talking \r\n> about *stateful NAT64*.",
+      "createdAt": "2023-01-04T13:31:10Z",
+      "updatedAt": "2023-01-04T13:31:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOH8F2T85aifDE",
+      "title": "464XLAT should cite RFC6877",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/4",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "> I recommend the following change:\r\n> \r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC8683] is\r\n>     used).\r\n> -->\r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC6877] is\r\n>     used [RFC8683]).\r\n> \r\n> Rationale: 464XLAT is defined in RFC6877, and the use case is described \r\n> in RFC8683.\r\n> \r\n\r\nfrom Gabor LENCSE\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/",
+      "createdAt": "2023-01-04T13:33:07Z",
+      "updatedAt": "2023-01-04T13:33:42Z",
       "closedAt": null,
       "comments": []
     }

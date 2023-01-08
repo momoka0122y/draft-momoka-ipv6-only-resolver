@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-01-05T00:27:43.733216+00:00",
+  "timestamp": "2023-01-08T00:29:06.766868+00:00",
   "repo": "momoka0122y/draft-momoka-ipv6-only-resolver",
   "labels": [
     {
@@ -95,6 +95,54 @@
       "body": "> I recommend the following change:\r\n> \r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC8683] is\r\n>     used).\r\n> -->\r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC6877] is\r\n>     used [RFC8683]).\r\n> \r\n> Rationale: 464XLAT is defined in RFC6877, and the use case is described \r\n> in RFC8683.\r\n> \r\n\r\nfrom Gabor LENCSE\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/",
       "createdAt": "2023-01-04T13:33:07Z",
       "updatedAt": "2023-01-04T13:33:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOH8F2T85alo1w",
+      "title": "Improve wording on how the resolver will work.",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/5",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Gabor LENCSE\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/\r\n\r\n> Perhaps the following sentence may also be improved:\r\n> \r\n>     [...] This problem can be solved by\r\n>     the iterative resolver converting IPv4 addresses to IPv6 by adding\r\n>     the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6\r\n>     packets to IPv4 packets.\r\n> -->    [...] This problem can be solved by\r\n>     the iterative resolver converting IPv4 addresses to IPv6 by adding\r\n>     the Pref64::/n prefix, and thus the IPv6 packet conveying the query\r\n>     is directed to a stateful NAT64 gateway that converts the IPv6 packet\r\n>     to an IPv4 packet.",
+      "createdAt": "2023-01-05T00:57:26Z",
+      "updatedAt": "2023-01-05T00:57:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOH8F2T85alqTy",
+      "title": "Use the words \u201cIPv6 to IPv4 translation\u201d",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/6",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Vasilenko Eduard\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/Kgjq9E0H58UClWxnSFl1m3OCwsM/\r\n\r\n\r\n> In a few places you have \u201cIPv4 to IPv6 translation\u201d but looks like in reality you mean the opposite: \u201cIPv6 to IPv4 translation\u201d,\r\n> \r\n> Because the connection is initiated from IPv6-only host (hence, \u201cfrom\u201d is IPv6).\r\n> \r\n> Like in the case NAT64. \u201c6\u201d is first in the abbreviation because the connection is initiated \u201cfrom\u201d IPv6, not from IPv4.\r\n> \r\n> If it is the case, then it is better to replace the order in many places over the draft.\r\n> \r\n> As an alternative, you may not show session direction: \u201cbetween IPv4 and IPv6\u201d but it gives less clarity for the reader. A little more effort would be needed to understand the essence.\r\n> \r\n> \r\n> The same is probably here: \u201cthe iterative\r\n>    resolver will translate the IPv4 address to IPv6 to access the\r\n>    authoritative server's IPv4 address via NAT64\u201d\r\n",
+      "createdAt": "2023-01-05T01:03:48Z",
+      "updatedAt": "2023-01-05T01:03:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOH8F2T85alsEb",
+      "title": "Move the Topology figures from the end of the document to the beginning",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/7",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Vasilenko Eduard\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/Kgjq9E0H58UClWxnSFl1m3OCwsM/\r\n\r\n> Could you move figure 3 (together with the whole section 5.2) from the end of the document to the beginning?\r\n> It would speed up the reader understanding of the environment.",
+      "createdAt": "2023-01-05T01:10:44Z",
+      "updatedAt": "2023-01-05T01:10:44Z",
       "closedAt": null,
       "comments": []
     }

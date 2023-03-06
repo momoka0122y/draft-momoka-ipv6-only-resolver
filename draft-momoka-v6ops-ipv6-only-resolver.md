@@ -1,5 +1,5 @@
 ---
-title: "IPv6 only iterative resolver utilising NAT64"
+title: "IPv6 only capable resolver utilising NAT64"
 abbrev: IPv6 only Resolver
 docname: draft-momoka-v6ops-ipv6-only-resolver-latest
 category: info
@@ -56,7 +56,7 @@ This mechanism allows IPv6-only iterative resolvers to initiate communications t
 # Introduction
 
 
-This document describes how an IPv6-only iterative resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4-only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}}.
+This document describes how an IPv6-only iterative resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4-only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}} when sending a query.
 When a specific DNS zone is only served by an IPv4-only authoritative server (which has only an A record), an IPv6-only iterative resolver cannot resolve that zone due to having no access to an IPv4 network.
 However, by performing IPv4 to IPv6 translation and utilizing the NAT64, accessing an IPv4-only authoritative server will be possible.
 
@@ -81,8 +81,8 @@ By operating an IPv6-only network and limiting IPv4 reachability to NAT64 device
 
 An iterative resolver is one of the applications that require IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
 This is because some authoritative servers do not support IPv6.
-As of 2022, even some of the most frequently queried authoritative servers cannot be accessed via IPv6.
-Without the utilization of NAT64, IPv6-only recursive resolvers need to forward queries to a dual-stack recursive name server performing the iterative queries.
+As of 2023, even some of the most frequently queried authoritative servers cannot be accessed via IPv6.
+Without the utilization of NAT64, IPv6-only resolvers need to forward queries to a dual-stack recursive name server performing the iterative queries.
 
 
 The current situation where an iterative resolver cannot be operated without IPv4 reachability may hinder the operation of a network's own iterative resolver in an IPv6-only network.
@@ -93,15 +93,15 @@ Therefore, this document describes how iterative resolvers can be used without i
 
 
 The NAT64/DNS64 mechanism enables IPv6-only clients in a network to communicate with remote IPv4-only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC8683}} is used).
-An iterative resolver cannot use the DNS64 because it is a service that uses literal IP addresses (and also because the DNS64 may depend on the resolver itself).
+An iterative resolver cannot use the DNS64 because it is a service that uses literal IP addresses.
 This problem can be solved by the iterative resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
 With this implementation, an iterative resolver can be operated even inside an IPv6-only network.
 
 # Solution with existing protocols
-This section provides the mechanism of an IPv6-only resolver utilizing the NAT64.
-We'll assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
+This section provides the mechanism of an IPv6-only capable resolver utilizing the NAT64.
+We will assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
 The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
-The IPv6-only resolver proposed in this document performs the IPv4 to IPv6 synthesis for the resolver to communicate with IPv4 servers via NAT64.
+The IPv6-only capable resolver proposed in this document performs the IPv4 to IPv6 synthesis for the resolver to communicate with IPv4 servers via NAT64.
 By using NAT64, this IPv6-only iterative resolver can be considered dual stack in the sense of {{!RFC3901}}.
 
 ## Finding an Authoritative server with only IPv4 addresses

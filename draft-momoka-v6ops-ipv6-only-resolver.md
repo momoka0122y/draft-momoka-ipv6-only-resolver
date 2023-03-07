@@ -94,7 +94,10 @@ Therefore, this document describes how iterative resolvers can be used without i
 
 The NAT64/DNS64 mechanism enables IPv6-only clients in a network to communicate with remote IPv4-only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC6877}} is used).
 An iterative resolver cannot use the DNS64 because it is a service that uses literal IP addresses.
-This problem can be solved by the iterative resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6 packets to IPv4 packets.
+This problem can be solved by the iterative resolver converting IPv4 addresses
+to IPv6 by adding the Pref64::/n prefix, and thus the IPv6 packet conveying the
+query is directed to a stateful NAT64 gateway that converts the IPv6 packet to
+gian IPv4 packet.
 With this implementation, an iterative resolver can be operated even inside an IPv6-only network.
 
 # Solution with existing protocols

@@ -48,7 +48,7 @@ informative:
 --- abstract
 
 By performing IPv4 to IPv6 translation, IPv6-only iterative resolvers can operate in an IPv6-only environment.
-When a specific DNS zone is only served by an IPv4-only authoritative server, the iterative resolver will translate the IPv4 address to IPv6 to access the authoritative server's IPv4 address via NAT64.
+When a specific DNS zone is only served by an IPv4-only authoritative server, the iterative resolver will translate the IPv4 address to IPv6 to access the authoritative server's IPv4 address via stateful NAT64.
 This mechanism allows IPv6-only iterative resolvers to initiate communications to IPv4-only authoritative servers.
 
 --- middle
@@ -56,9 +56,9 @@ This mechanism allows IPv6-only iterative resolvers to initiate communications t
 # Introduction
 
 
-This document describes how an IPv6-only iterative resolver can use NAT64 {{!NAT64=RFC6146}} to connect to an IPv4-only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}} when sending a query.
+This document describes how an IPv6-only iterative resolver can use stateful NAT64 {{!NAT64=RFC6146}} to connect to an IPv4-only authoritative server by performing IPv4 to IPv6 translation {{!RFC6052}} when sending a query.
 When a specific DNS zone is only served by an IPv4-only authoritative server (which has only an A record), an IPv6-only iterative resolver cannot resolve that zone due to having no access to an IPv4 network.
-However, by performing IPv4 to IPv6 translation and utilizing the NAT64, accessing an IPv4-only authoritative server will be possible.
+However, by performing IPv4 to IPv6 translation and utilizing the stateful NAT64, accessing an IPv4-only authoritative server will be possible.
 
 
 # Terminology
@@ -98,11 +98,11 @@ This problem can be solved by the iterative resolver converting IPv4 addresses t
 With this implementation, an iterative resolver can be operated even inside an IPv6-only network.
 
 # Solution with existing protocols
-This section provides the mechanism of an IPv6-only capable resolver utilizing the NAT64.
+This section provides the mechanism of an IPv6-only capable resolver utilizing stateful NAT64.
 We will assume we have one or more IPv6/IPv4 translator boxes {{!NAT64=RFC6146}} connecting an IPv6 network to an IPv4 network.
-The NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
-The IPv6-only capable resolver proposed in this document performs the IPv4 to IPv6 synthesis for the resolver to communicate with IPv4 servers via NAT64.
-By using NAT64, this IPv6-only iterative resolver can be considered dual stack in the sense of {{!RFC3901}}.
+The stateful NAT64 device provides translation service and bridges the two networks, allowing communication between IPv6-only hosts and IPv4-only hosts.
+The IPv6-only capable resolver proposed in this document performs the IPv4 to IPv6 synthesis for the resolver to communicate with IPv4 servers via stateful NAT64.
+By using stateful NAT64, this IPv6-only iterative resolver can be considered dual stack in the sense of {{!RFC3901}}.
 
 ## Finding an Authoritative server with only IPv4 addresses
 
@@ -112,9 +112,9 @@ It is not recommended to synthesize IPv4 addresses of an authoritative server if
 
 ## Generation of the IPv6 Representations of IPv4 Addresses
 
-### Obtaining the Pref64::/n of the NAT64
+### Obtaining the Pref64::/n of the stateful NAT64
 
-The iterative resolver can obtain the Pref64::/n used by the NAT64 of the network by either static configuration or by using discovery mechanisms.
+The iterative resolver can obtain the Pref64::/n used by the stateful NAT64 of the network by either static configuration or by using discovery mechanisms.
 Static configuration may be the most likely scenario, given that the iterative resolver server may also serve as a DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options the resolver has if it wants to use a discovery mechanism to find the Pref64::/n.

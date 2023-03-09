@@ -72,11 +72,7 @@ However, by performing IPv4 to IPv6 translation and utilizing the stateful NAT64
 * IPv4-only authoritative server:    An authoritative server with only IPv4 connectivity, or an authoritative server with only an A record registered so it can only be accessed by IPv4.
 
 # Motivation and Problem Solved
-Over the past decade, IPv6 capabilities have been widely deployed, and IPv6 traffic is growing faster than IPv4 traffic.
-An overview of IPv6 deployment status and how network operators are implementing IPv6 is provided by the document {{?I-D.ietf-v6ops-ipv6-deployment}}.
-Most IPv6 deployments as of 2023 use a dual-stack strategy {{?RFC4213}}.
-However, the deployment of IPv6-only networks is also in progress, as demonstrated by {{?I-D.draft-xie-v6ops-framework-md-ipv6only-underlay}}.
-By operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations compared to a dual-stack environment.
+
 
 
 An iterative resolver is one of the applications that require IPv4 connectivity. As stated in BCP91 {{!RFC3901}}, “every recursive name server SHOULD be either IPv4-only or dual stack.”
@@ -85,7 +81,7 @@ As of 2023, even some of the most frequently queried authoritative servers canno
 Without the utilization of NAT64, IPv6-only resolvers need to forward queries to a dual-stack recursive name server performing the iterative queries.
 
 
-The current situation where an iterative resolver cannot be operated without IPv4 reachability may hinder the operation of a network's own iterative resolver in an IPv6-only network.
+The current situation where an iterative resolver cannot operate without IPv4 reachability may hinder the operation of a network's own iterative resolver in an IPv6-only network.
 Therefore, this document describes how iterative resolvers can be used without issues in IPv6-only networks by utilizing NAT64.
 
 
@@ -99,6 +95,74 @@ to IPv6 by adding the Pref64::/n prefix, and thus the IPv6 packet conveying the
 query is directed to a stateful NAT64 gateway that converts the IPv6 packet to
 an IPv4 packet.
 With this implementation, an iterative resolver can be operated even inside an IPv6-only network.
+
+
+## Deployment Scenarios and Examples
+
+The deployment of IPv6-only networks is in progress, as demonstrated by {{?I-D.draft-xie-v6ops-framework-md-ipv6only-underlay}}.
+By operating an IPv6-only network and limiting IPv4 reachability to NAT64 devices, operators can reduce IPv4 usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations compared to a dual-stack environment.
+
+
+
+
+In examples of past RFCs, name resolvers have always had an IPv4 address. For example, all three use cases for DNS64 in RFC 6147 are dual-stack name servers.
+
+
+
+~~~ drawing
+            +---------------------+         +---------------+
+            |IPv6 network         |         |    IPv4       |
+            |              +-------------+  |  Internet     |
+            |           |--| Name server |--|               |
+            |           |  | with DNS64  |  |  +----+       |
+            |  +----+   |  +-------------+  |  | H2 |       |
+            |  | H1 |---|         |         |  +----+       |
+            |  +----+   |   +------------+  |  192.0.2.1    |
+            |           |---| IPv6/IPv4  |--|               |
+            |           |   | Translator |  |               |
+            |           |   +------------+  |               |
+            |           |         |         |               |
+            +---------------------+         +---------------+
+~~~
+{: #example-topologies-in-RFC6147-1 title="Example network setup of the use of DNS64 described in RFC6147 Section7.1"}
+
+~~~ drawing
+            +---------------------+         +---------------+
+            |IPv6 network         |         |    IPv4       |
+            |                 +--------+    |  Internet     |
+            |           |-----| Name   |----|               |
+            | +-----+   |     | server |    |  +----+       |
+            | | H1  |   |     +--------+    |  | H2 |       |
+            | |with |---|         |         |  +----+       |
+            | |DNS64|   |   +------------+  |  192.0.2.1    |
+            | +----+    |---| IPv6/IPv4  |--|               |
+            |           |   | Translator |  |               |
+            |           |   +------------+  |               |
+            |           |         |         |               |
+            +---------------------+         +---------------+
+~~~
+{: #example-topologies-in-RFC6147-2 title="Example network setup of the use of DNS64 described in RFC6147 Section7.2"}
+
+However, it is necessary to consider the existence of an IPv6 single-stack full-service resolver.
+In this document we consider an IPv6-only network where the iterative resolver is inside the IPv6-only network and does not have an IPv4 address.
+This is to restrict IPv4 management to the NAT64 device.
+
+~~~ drawing
+      +--------------------------+         +----------------------+
+      | IPv6 network             |         |    IPv4              |
+      |                          |         |  Internet            |
+      |                |         |         |                      |
+      | +----------+   |         |         |  +--------------+    |
+      | |IPv6-only |   |         |         |  |Authoritative |    |
+      | |Iterative |   |         |         |  |server        |    |
+      | |resolver  |---|   +------------+  |  +--------------+    |
+      | +----------+   |---| IPv6/IPv4  |--|  192.0.2.1           |
+      |                |   | Translator |  |                      |
+      |                    +------------+  |                      |
+      |                          |         |                      |
+      +--------------------------+         +----------------------+
+~~~
+{: #ipv6oly-resolver-example-topology title="Network example referenced in this document with an IPv6-only iterative resolver"}
 
 # Solution with existing protocols
 This section provides the mechanism of an IPv6-only capable resolver utilizing stateful NAT64.
@@ -139,63 +203,7 @@ As the iterative resolver is used within an IPv6-only network, the server can al
 TODO
 
 
-## Deployment Scenarios and Examples
-In examples of past RFCs, name resolvers have always had an IPv4 address. For example, all three use cases for DNS64 in RFC 6147 are dual-stack name servers.
 
-However, it is necessary to consider the existence of an IPv6 single-stack full-service resolver with DNS64 capabilities.
-
-~~~ drawing
-            +---------------------+         +---------------+
-            |IPv6 network         |         |    IPv4       |
-            |              +-------------+  |  Internet     |
-            |           |--| Name server |--|               |
-            |           |  | with DNS64  |  |  +----+       |
-            |  +----+   |  +-------------+  |  | H2 |       |
-            |  | H1 |---|         |         |  +----+       |
-            |  +----+   |   +------------+  |  192.0.2.1    |
-            |           |---| IPv6/IPv4  |--|               |
-            |           |   | Translator |  |               |
-            |           |   +------------+  |               |
-            |           |         |         |               |
-            +---------------------+         +---------------+
-~~~
-{: #example-topologies-in-RFC6147-1 title="Example network setup of the use of DNS64 described in RFC6147 Section7.1"}
-
-~~~ drawing
-            +---------------------+         +---------------+
-            |IPv6 network         |         |    IPv4       |
-            |                 +--------+    |  Internet     |
-            |           |-----| Name   |----|               |
-            | +-----+   |     | server |    |  +----+       |
-            | | H1  |   |     +--------+    |  | H2 |       |
-            | |with |---|         |         |  +----+       |
-            | |DNS64|   |   +------------+  |  192.0.2.1    |
-            | +----+    |---| IPv6/IPv4  |--|               |
-            |           |   | Translator |  |               |
-            |           |   +------------+  |               |
-            |           |         |         |               |
-            +---------------------+         +---------------+
-~~~
-{: #example-topologies-in-RFC6147-2 title="Example network setup of the use of DNS64 described in RFC6147 Section7.2"}
-
-However, in this document we consider an IPv6-only network where the iterative resolver is inside the IPv6-only network and does not have an IPv4 address. This is to restrict IPv4 management to the NAT64 device.
-
-~~~ drawing
-      +--------------------------+         +----------------------+
-      | IPv6 network             |         |    IPv4              |
-      |                          |         |  Internet            |
-      |                |         |         |                      |
-      | +----------+   |         |         |  +--------------+    |
-      | |IPv6-only |   |         |         |  |Authoritative |    |
-      | |Iterative |   |         |         |  |server        |    |
-      | |resolver  |---|   +------------+  |  +--------------+    |
-      | +----------+   |---| IPv6/IPv4  |--|  192.0.2.1           |
-      |                |   | Translator |  |                      |
-      |                    +------------+  |                      |
-      |                          |         |                      |
-      +--------------------------+         +----------------------+
-~~~
-{: #ipv6oly-resolver-example-topology title="Network example referenced in this document with an IPv6-only iterative resolver"}
 
 # Security Considerations
 
@@ -215,6 +223,7 @@ https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/6334/commits
 
 
 Unbound has a PR from a contributor.
+
 https://github.com/NLnetLabs/unbound/issues/721
 
 --- back

@@ -183,7 +183,7 @@ The iterative resolver can obtain the Pref64::/n used by the network's stateful 
 Static configuration may be the most likely scenario, as the iterative resolver server may also serve as a DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options available to the resolver if it wishes to use a discovery mechanism to find the Pref64::/n.
-Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} may not work because they require a resolver to work.
+Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} does not work because they require a resolver to work.
 
 
 

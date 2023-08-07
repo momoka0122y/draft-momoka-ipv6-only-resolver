@@ -89,11 +89,8 @@ Therefore, this document describes how iterative resolvers can be used without i
 
 
 The NAT64/DNS64 mechanism enables IPv6-only clients in a network to communicate with remote IPv4-only nodes. However, using literal IPv4 addresses instead of DNS names will fail (unless 464XLAT {{?RFC6877}} is used).
-An iterative resolver cannot use the DNS64 because it is a service that uses literal IP addresses.
-This problem can be solved by the iterative resolver converting IPv4 addresses
-to IPv6 by adding the Pref64::/n prefix, and thus the IPv6 packet conveying the
-query is directed to a stateful NAT64 gateway that converts the IPv6 packet to
-an IPv4 packet.
+An iterative resolver is a service that uses literal IP addresses, so it cannot use the DNS64.
+This problem can be solved by the iterative resolver converting IPv4 addresses to IPv6 by adding the Pref64::/n prefix, and thus the IPv6 packet conveying the query is directed to a stateful NAT64 gateway that converts the IPv6 packet to an IPv4 packet.
 With this implementation, an iterative resolver can be operated even inside an IPv6-only network.
 
 
@@ -183,10 +180,9 @@ It is not recommended to synthesise an IPv4 address of an authoritative server i
 ### Obtaining the Pref64::/n of the stateful NAT64
 
 The iterative resolver can obtain the Pref64::/n used by the network's stateful NAT64 either by static configuration or by using discovery mechanisms.
-Static configuration may be the most likely scenario, as the iterative resolver server may also serve as a DNS64 server.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options available to the resolver if it wishes to use a discovery mechanism to find the Pref64::/n.
-Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} may not work because they require a resolver to work.
+Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} does not work because they require a resolver to work.
 
 
 
@@ -195,9 +191,6 @@ Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64
 The address translation can be performed by following Section 2.3 of {{!RFC6052}}.
 After the synthesis is done, the IPv6-only iterative resolver can send a query to the converted IPv6 address.
 
-## Use of the iterative resolver as DNS64
-
-As the iterative resolver is used within an IPv6-only network, the server can also perform as DNS64 {{!DNS64=RFC6147}} when an AAAA record is queried from a STUB resolver but the domain only has an A record.
 
 # Deployment Notes
 TODO

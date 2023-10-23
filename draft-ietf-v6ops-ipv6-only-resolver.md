@@ -1,7 +1,7 @@
 ---
 title: "IPv6-only Capable Resolvers Utilising NAT64"
 abbrev: IPv6-only Resolver
-docname: draft-momoka-v6ops-ipv6-only-resolver-latest
+docname: draft-ietf-v6ops-ipv6-only-resolver-latest
 category: info
 
 ipr: trust200902
@@ -36,12 +36,8 @@ normative:
 
 
 informative:
-  I-D.ietf-v6ops-ipv6-deployment:
-    display: ietf-v6ops-ipv6-deployment
   I-D.draft-hunek-v6ops-nat64-srv:
     display: draft-hunek-v6ops-nat64-srv
-  I-D.draft-xie-v6ops-framework-md-ipv6only-underlay:
-    display: draft-xie-v6ops-framework-md-ipv6only-underlay
 
 
 
@@ -102,7 +98,7 @@ With this implementation, an iterative resolver can be operated even inside an I
 
 ## Deployment Scenarios and Examples
 
-The deployment of IPv6-only networks is in progress, as demonstrated by {{?I-D.draft-xie-v6ops-framework-md-ipv6only-underlay}}.
+The deployment of IPv6-only networks is in progress, as demonstrated by {{?RFC9386}}.
 By operating an IPv6-only network and limiting IPv4 reachability to NAT64 functions, operators can optimize IPv4 address usage and concentrate on IPv6 operations, which is generally believed to lower operational costs and optimize operations compared to a dual-stack environment.
 
 

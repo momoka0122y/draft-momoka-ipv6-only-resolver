@@ -36,8 +36,6 @@ normative:
 
 
 informative:
-  I-D.draft-hunek-v6ops-nat64-srv:
-    display: draft-hunek-v6ops-nat64-srv
 
 
 
@@ -185,7 +183,7 @@ It is not recommended to synthesize IPv4 addresses of an authoritative server if
 The iterative resolver can obtain the Pref64::/n used by the network's stateful NAT64 either by static configuration or by using a discovery mechanism.
 
 The Port Control Protocol {{?RFC7225}} or Router Advertisements {{?RFC8781}} are two options available to the resolver if it wishes to use a discovery mechanism to find the Pref64::/n.
-Using the mechanisms described in {{?RFC7050}} or {{?I-D.draft-hunek-v6ops-nat64-srv}} does not work because they require a resolver to work.
+Using the mechanisms described in {{?RFC7050}} does not work because they require a resolver to work.
 
 
 

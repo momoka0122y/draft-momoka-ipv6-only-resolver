@@ -215,11 +215,10 @@ BIND has a work-in-progress branch available at:
 https://gitlab.isc.org/isc-projects/bind9/-/merge_requests/6334/commits
 
 
-Unbound has an implementation in source, available from below PR:
+Unbound has this feature available for versions after  Unbound 1.18.0
 
-https://github.com/NLnetLabs/unbound/pull/722
+https://nlnetlabs.nl/projects/unbound/download/#unbound-1-18-0.
 
-Building from source or using a version after Version 1.19 will allow to use this function.
 --- back
 
 # Acknowledgments

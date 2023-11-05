@@ -174,7 +174,7 @@ By using stateful NAT64, this IPv6-only iterative resolver aligns with the dual-
 Before initiating a query, an iterative resolver may prioritize authoritative servers with IPv6 addresses by sorting the SLIST data structure, as described in {{?RFC1034}}.
 If the resolver finds only an A record for an authoritative server, the resolver should perform address synthesis to the IPv4 address of the authoritative server, converting IPv4 addresses to IPv6 by following the algorithm in {{?RFC6052}}.
 With this the IPv6 packet carrying the query is routed to a stateful NAT64 function, which will convert the IPv6 packet with a destination IPv4-converted IPv6 address that matches the NAT64 prefix to an IPv4 packet.
-It is not recommended to synthesize IPv4 addresses of an authoritative server if it also has an IPv6 address.
+It is NOT RECOMMENDED to synthesize IPv4 addresses of an authoritative server if it is reachable over IPv6.
 
 ## Generating IPv4-converted IPv6 Addresses
 

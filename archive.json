@@ -1,0 +1,180 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-01-08T00:29:06.766868+00:00",
+  "repo": "momoka0122y/draft-momoka-ipv6-only-resolver",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOH8F2T85ZhaUe",
+      "title": "change to IPv6-only *capable* resolver",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/2",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "IPv6 only resolver - A resolver that only has an IPv6 address and can only send queries to IPv6-capable authoritative servers.\r\nIPv6-only *capable* resolver - The resolver we propose in this document which utilises that NAT64 by doing the synthesis.",
+      "createdAt": "2022-12-18T14:50:03Z",
+      "updatedAt": "2022-12-18T14:50:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOH8F2T85aieX9",
+      "title": "Make it unambiguous in the text that we are talking about *stateful NAT64*",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/3",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "comment from Gabor LENCSE \r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/\r\n\r\n> In the draft, you mention *NAT64*. Seeing this, most people likely \r\n> think of *stateful NAT64*. A few (like me) thinks that it can be either \r\n> *stateful NAT64* [RFC6146] or *stateless NAT64* [RFC7915] (\"officially\" \r\n> called SIIT). I saw that you referred to RFC 6146, but I think it would \r\n> be worth making it unambiguous also in the text that you are talking \r\n> about *stateful NAT64*.",
+      "createdAt": "2023-01-04T13:31:10Z",
+      "updatedAt": "2023-01-04T13:31:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOH8F2T85aifDE",
+      "title": "464XLAT should cite RFC6877",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/4",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "> I recommend the following change:\r\n> \r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC8683] is\r\n>     used).\r\n> -->\r\n>     [...] However, using literal IPv4\r\n>     addresses instead of DNS names will fail (unless 464XLAT [RFC6877] is\r\n>     used [RFC8683]).\r\n> \r\n> Rationale: 464XLAT is defined in RFC6877, and the use case is described \r\n> in RFC8683.\r\n> \r\n\r\nfrom Gabor LENCSE\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/",
+      "createdAt": "2023-01-04T13:33:07Z",
+      "updatedAt": "2023-01-04T13:33:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOH8F2T85alo1w",
+      "title": "Improve wording on how the resolver will work.",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/5",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Gabor LENCSE\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/LXXuGxJrBa61aH_rJ-UsG2xlyIY/\r\n\r\n> Perhaps the following sentence may also be improved:\r\n> \r\n>     [...] This problem can be solved by\r\n>     the iterative resolver converting IPv4 addresses to IPv6 by adding\r\n>     the Pref64::/n prefix, which instructs the NAT64 to convert the IPv6\r\n>     packets to IPv4 packets.\r\n> -->    [...] This problem can be solved by\r\n>     the iterative resolver converting IPv4 addresses to IPv6 by adding\r\n>     the Pref64::/n prefix, and thus the IPv6 packet conveying the query\r\n>     is directed to a stateful NAT64 gateway that converts the IPv6 packet\r\n>     to an IPv4 packet.",
+      "createdAt": "2023-01-05T00:57:26Z",
+      "updatedAt": "2023-01-05T00:57:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOH8F2T85alqTy",
+      "title": "Use the words \u201cIPv6 to IPv4 translation\u201d",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/6",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Vasilenko Eduard\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/Kgjq9E0H58UClWxnSFl1m3OCwsM/\r\n\r\n\r\n> In a few places you have \u201cIPv4 to IPv6 translation\u201d but looks like in reality you mean the opposite: \u201cIPv6 to IPv4 translation\u201d,\r\n> \r\n> Because the connection is initiated from IPv6-only host (hence, \u201cfrom\u201d is IPv6).\r\n> \r\n> Like in the case NAT64. \u201c6\u201d is first in the abbreviation because the connection is initiated \u201cfrom\u201d IPv6, not from IPv4.\r\n> \r\n> If it is the case, then it is better to replace the order in many places over the draft.\r\n> \r\n> As an alternative, you may not show session direction: \u201cbetween IPv4 and IPv6\u201d but it gives less clarity for the reader. A little more effort would be needed to understand the essence.\r\n> \r\n> \r\n> The same is probably here: \u201cthe iterative\r\n>    resolver will translate the IPv4 address to IPv6 to access the\r\n>    authoritative server's IPv4 address via NAT64\u201d\r\n",
+      "createdAt": "2023-01-05T01:03:48Z",
+      "updatedAt": "2023-01-05T01:03:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOH8F2T85alsEb",
+      "title": "Move the Topology figures from the end of the document to the beginning",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/issues/7",
+      "state": "OPEN",
+      "author": "momoka0122y",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "from Vasilenko Eduard\r\nhttps://mailarchive.ietf.org/arch/msg/v6ops/Kgjq9E0H58UClWxnSFl1m3OCwsM/\r\n\r\n> Could you move figure 3 (together with the whole section 5.2) from the end of the document to the beginning?\r\n> It would speed up the reader understanding of the environment.",
+      "createdAt": "2023-01-05T01:10:44Z",
+      "updatedAt": "2023-01-05T01:10:44Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOH8F2T85A2skY",
+      "title": "Fix Y.Toyota's name and mail address",
+      "url": "https://github.com/momoka0122y/draft-momoka-ipv6-only-resolver/pull/1",
+      "state": "MERGED",
+      "author": "yas-nyan",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- use fullname (Kanji)\r\n- fix mail address",
+      "createdAt": "2022-10-15T07:08:30Z",
+      "updatedAt": "2022-10-15T07:08:46Z",
+      "baseRepository": "momoka0122y/draft-momoka-ipv6-only-resolver",
+      "baseRefName": "main",
+      "baseRefOid": "1e0b5598955fedff677f4e4fce66dc2c99793039",
+      "headRepository": "yas-nyan/draft-momoka-ipv6-only-resolver",
+      "headRefName": "main",
+      "headRefOid": "eccb5ab382b348ed720418988360dfd425680e08",
+      "closedAt": "2022-10-15T07:08:46Z",
+      "mergedAt": "2022-10-15T07:08:46Z",
+      "mergedBy": "momoka0122y",
+      "mergeCommit": {
+        "oid": "12bf4259a04a12bc6a99f8a5d66ab3581741454c"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}

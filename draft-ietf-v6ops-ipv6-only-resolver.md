@@ -30,7 +30,7 @@ author:
       ascii: Yasunobu Toyota
     organization: Keio University/WIDE Project
     email: yas-nyan@sfc.wide.ad.jp
-
+replaces: draft-momoka-v6ops-ipv6-only-resolver
 
 normative:
 

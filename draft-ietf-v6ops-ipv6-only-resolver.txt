@@ -5,8 +5,8 @@
 v6ops                                            山本 桃歌 (M. Yamamoto)
 Internet-Draft                      The University of Tokyo/WIDE Project
 Intended status: Informational                     豊田 安信 (Y. Toyota)
-Expires: 8 May 2024                         Keio University/WIDE Project
-                                                         5 November 2023
+Expires: 12 September 2024                  Keio University/WIDE Project
+                                                           11 March 2024
 
 
               IPv6-only Capable Resolvers Utilising NAT64
@@ -48,11 +48,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 May 2024.
+   This Internet-Draft will expire on 12 September 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
